@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
+  "_moduleAliases": {
+    "@": "build/"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
-    "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start || exit 1'",
-    "dev_start": "npm run -s lint && ts-node ./src/index.ts",
-    "dev_test": "pm2 start ts-node -- -P tsconfig.json ./src/index.ts",
+    "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
+    "dev_start": "npm run -s lint && ts-node -P tsconfig.json ./src/index.ts",
     "build": "npm run lint && npm run tsc",
     "pm2_run": "npm run build && npm run pm2_stop && pm2 --name afuri start ./build/index.js -i 3",
     "pm2_stop": "pm2 stop afuri && pm2 delete afuri",
@@ -27,7 +29,8 @@
   "homepage": "https://github.com/StudioLoris/afuri-backend#readme",
   "dependencies": {
     "koa": "^2.5.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "module-alias": "^2.0.6"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",

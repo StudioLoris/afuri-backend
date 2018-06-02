@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
       "module": "commonjs",
+      "moduleResolution": "node",
       "lib": ["esnext"],
       "target": "es6",
       "sourceMap": true,
       "baseUrl": ".",
       "paths": {
-        "@/*": ["./src/*"],
-        "lodash/*": ["node_modules/@types/lodash-es/*"],
+        "@/*": ["src/*"],
+        // "lodash/*": ["node_modules/@types/lodash-es/*"],
       },
       "outDir": "./build"
     },
