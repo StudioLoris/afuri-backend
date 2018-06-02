@@ -5,23 +5,20 @@ import * as Router from 'koa-router';
 // import * as sourceMapSupport from 'source-map-support';
 
 import appService from '../service/app';
+import routes from '../routes';
 
 const start = (isTest : boolean) : http.Server => {
 
-    console.log('Afuri Backend Service');
-
+    /* istanbul ignore next line */
     if (appService.isDev()) {
-        console.log('Running in DEV mode!');
+        console.log('Afuri Backend Service - Running in DEV mode!');
     }
 
     const app = new koa();
-    const router = new Router();
 
-    router.get('/', async (ctx) => {
-        ctx.body = 'Afuri Backend Service';
-    });
+    app.use(routes.routes());
 
-    app.use(router.routes());
+    /* istanbul ignore next line */
     return app.listen(3001).on('error', (err) => {
         throw err;
     });
