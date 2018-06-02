@@ -26,7 +26,7 @@
     "dev_start": "npm run -s lint && ts-node -P tsconfig.json ./src/index.ts",
     "build": "npm run lint && npm run tsc",
     "pm2_run": "npm run build && npm run pm2_stop && pm2 --name afuri start ./build/index.js -i 3",
-    "pm2_stop": "pm2 stop afuri && pm2 delete afuri",
+    "pm2_stop": "pm2 stop afuri || pm2 delete afuri || true",
     "pm2_monit": "pm2 monit"
   },
   "repository": {
