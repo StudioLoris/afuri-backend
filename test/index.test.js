@@ -5,7 +5,7 @@ const server = start(true);
 
 afterEach(() => server.close());
 
-describe("Afuri Backend Testing", () => {
+describe("Afuri API Testing", () => {
     test("Root should return 200", async () => {
         const res = await request(server).get("/");
         expect(res.status).toBe(200);
