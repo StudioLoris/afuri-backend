@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "_moduleAliases": {
-    "@": "build/"
+  "jest": {
+    "testEnvironment": "node"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && jest",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
@@ -29,15 +29,16 @@
   "homepage": "https://github.com/StudioLoris/afuri-backend#readme",
   "dependencies": {
     "koa": "^2.5.1",
-    "koa-router": "^7.4.0",
-    "module-alias": "^2.0.6"
+    "koa-router": "^7.4.0"
   },
   "devDependencies": {
     "@types/koa": "^2.0.46",
     "@types/node": "^10.1.3",
+    "jest": "^23.1.0",
     "nodemon": "^1.17.5",
     "pm2": "^2.10.4",
     "source-map-support": "^0.5.6",
+    "supertest": "^3.1.0",
     "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
