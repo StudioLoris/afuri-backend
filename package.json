@@ -9,7 +9,11 @@
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start || exit 1'",
     "dev_start": "npm run -s lint && ts-node ./src/index.ts",
-    "build": "npm run lint && npm run tsc"
+    "dev_test": "pm2 start ts-node -- -P tsconfig.json ./src/index.ts",
+    "build": "npm run lint && npm run tsc",
+    "pm2_run": "npm run build && npm run pm2_stop && pm2 --name afuri start ./build/index.js -i 3",
+    "pm2_stop": "pm2 stop afuri && pm2 delete afuri",
+    "pm2_monit": "pm2 monit"
   },
   "repository": {
     "type": "git",
@@ -22,8 +26,14 @@
   },
   "homepage": "https://github.com/StudioLoris/afuri-backend#readme",
   "dependencies": {
+    "koa": "^2.5.1",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.46",
     "@types/node": "^10.1.3",
     "nodemon": "^1.17.5",
+    "pm2": "^2.10.4",
     "source-map-support": "^0.5.6",
     "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
