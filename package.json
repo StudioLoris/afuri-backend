@@ -4,10 +4,22 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   },
   "scripts": {
-    "test": "npm run build && jest",
+    "test": "jest --coverage",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
@@ -32,6 +44,7 @@
     "koa-router": "^7.4.0"
   },
   "devDependencies": {
+    "@types/jest": "^23.0.0",
     "@types/koa": "^2.0.46",
     "@types/node": "^10.1.3",
     "jest": "^23.1.0",
@@ -39,6 +52,7 @@
     "pm2": "^2.10.4",
     "source-map-support": "^0.5.6",
     "supertest": "^3.1.0",
+    "ts-jest": "^22.4.6",
     "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
     "typescript": "^2.8.3"
