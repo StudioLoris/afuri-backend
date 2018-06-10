@@ -41,7 +41,11 @@
   "homepage": "https://github.com/StudioLoris/afuri-backend#readme",
   "dependencies": {
     "koa": "^2.5.1",
-    "koa-router": "^7.4.0"
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0",
+    "reflect-metadata": "^0.1.12",
+    "sqlite3": "^4.0.0",
+    "typeorm": "^0.2.7"
   },
   "devDependencies": {
     "@types/jest": "^23.0.0",
