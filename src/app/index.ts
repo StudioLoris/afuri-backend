@@ -21,7 +21,7 @@ const start = (isTest : boolean) : http.Server => {
     app.use(routes.routes());
     initApp();
     /* istanbul ignore next line */
-    return app.listen(3001).on('error', (err) => {
+    return app.listen(isTest ? 0 : 3001).on('error', (err) => {
         throw err;
     });
 };
