@@ -1,12 +1,12 @@
 import * as Router from 'koa-router';
-import { EntityHandler } from '../../db';
-import { User } from '../../db/entity/user';
+import {
+    findUser,
+    createUser
+} from '../../db/utils/users';
 
 const userRoute = new Router();
 
 userRoute.get('/', async (ctx) => {
-    // console.log(ctx.);
-    console.log(ctx.request.body);
     ctx.body = {
         apiProvider: 'Afuri',
         version: '0.0.1',
@@ -14,19 +14,24 @@ userRoute.get('/', async (ctx) => {
 });
 
 userRoute.post('/check', async (ctx) => {
-    // console.log(ctx.);
     console.log(ctx.request.body);
     const { email } = ctx.request.body as any;
-    let userToCheck = await EntityHandler.user.findOne({ email });
-    console.log(userToCheck);
-    if (!userToCheck) {
-        const user = new User();
-        user.email = email;
-        await EntityHandler.user.save(user);
-        console.log('New User created');
-        userToCheck = await EntityHandler.user.findOne({ email });
+    /**
+     * TODO: Check user session. If session is invalid, we'll run the following checks
+     */
+    const invalidSession = true;
+    if (invalidSession) {
+        /**
+         * check oauth toekn first
+         */
+
+        const user = await findUser({ email });
+        if (!user) {
+            await createUser({ email });
+            console.log('New User created');
+        }
     }
-    ctx.body = userToCheck;
+    ctx.body = {};
 });
 
 export default userRoute;
