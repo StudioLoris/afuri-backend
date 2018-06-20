@@ -1,4 +1,6 @@
 import * as Router from 'koa-router';
+import http_status from '../../constants/http_status';
+import OauthService from '../../service/oauth';
 import {
     findUser,
     createUser
@@ -15,23 +17,29 @@ userRoute.get('/', async (ctx) => {
 
 userRoute.post('/check', async (ctx) => {
     console.log(ctx.request.body);
-    const { email } = ctx.request.body as any;
     /**
      * TODO: Check user session. If session is invalid, we'll run the following checks
      */
     const invalidSession = true;
     if (invalidSession) {
-        /**
-         * check oauth toekn first
-         */
-
+        const { email, provider, token } = ctx.request.body as any;
+        const isValidOauth = await OauthService.validate(provider, token);
+        if (!isValidOauth) {
+            ctx.throw(http_status.UNAUTHORIZED, '');
+            return;
+        }
         const user = await findUser({ email });
         if (!user) {
             await createUser({ email });
-            console.log('New User created');
+            ctx.status = http_status.CREATED;
+        } else {
+            ctx.status = http_status.OK;
         }
+        ctx.body = {};
+    } else {
+        ctx.status = http_status.OK;
+        ctx.body = {};
     }
-    ctx.body = {};
 });
 
 export default userRoute;
