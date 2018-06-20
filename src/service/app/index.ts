@@ -1,9 +1,28 @@
 class AppService {
 
-    constructor() {
-    }
+    public isDev : boolean = false;
+    public MEMCACHE_URL : string;
+    public MEMCACHE_PORT : string;
 
-    public isDev = () : boolean => process.env.npm_config_DEV === 'DEV';
+    constructor() {
+
+        const {
+            npm_config_DEV,
+            RMDB_TYPE,
+            RMDB_URL,
+            RMDB_PORT,
+            MEMCACHE_URL,
+            MEMCACHE_PORT,
+            MEMCACHE_USERNAME,
+            MEMCACHE_PASSWORD,
+        } = process.env;
+
+        this.isDev = npm_config_DEV === 'DEV';
+
+        this.MEMCACHE_URL = MEMCACHE_URL || '127.0.0.1';
+        this.MEMCACHE_PORT = MEMCACHE_PORT || '6379';
+
+    }
 
 }
 

@@ -12,14 +12,14 @@ import initApp from './init';
 const start = (isTest : boolean) : http.Server => {
 
     /* istanbul ignore next line */
-    if (appService.isDev()) {
+    if (appService.isDev) {
         console.log('Afuri Backend Service - Running in DEV mode!');
     }
 
     const app = new koa();
     app.use(bodyParser());
     app.use(routes.routes());
-    initApp();
+    initApp(app);
     /* istanbul ignore next line */
     return app.listen(isTest ? 0 : 3001).on('error', (err) => {
         throw err;

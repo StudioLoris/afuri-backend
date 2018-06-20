@@ -43,6 +43,8 @@
     "koa": "^2.5.1",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "redis": "^2.8.0",
     "reflect-metadata": "^0.1.12",
     "sqlite3": "^4.0.0",
     "typeorm": "^0.2.7"
