@@ -16,6 +16,9 @@ userRoute.get('/', async (ctx) => {
 });
 
 userRoute.post('/check', async (ctx) => {
+    console.log(ctx.session);
+    let { count } = ctx.session;
+    ctx.session.count = (typeof count === 'number') ? ++count : 0;
     console.log(ctx.request.body);
     /**
      * TODO: Check user session. If session is invalid, we'll run the following checks

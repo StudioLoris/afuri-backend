@@ -29,7 +29,6 @@ class MemcacheHandler {
     });
     return new Promise((res, rej) => {
       this.client.on('connect', () => {
-        console.log('connected!!!!');
         res(true);
       });
       this.client.on('error', (err) => rej(err));
@@ -48,14 +47,8 @@ class MemcacheHandler {
       },
       set: async (key, sess, ttl?) => {
         const ret = JSON.stringify(sess);
-        if (typeof ttl === 'number') {
-          ttl = Math.ceil(ttl / 1000);
-        }
-        if (ttl) {
-          await this.client.set(key, ret, 'EX', ttl);
-        } else {
-          await this.client.set(key, ret);
-        }
+        ttl = Math.ceil(ttl / 1000);
+        await this.client.set(key, ret, 'EX', ttl);
       },
       destroy: async (key) => {
         await this.client.del(key);
