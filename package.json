@@ -19,7 +19,8 @@
     ]
   },
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --detectOpenHandles",
+    "test:prod": "npm run build && jest",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
@@ -45,6 +46,7 @@
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
     "redis": "^2.8.0",
+    "redis-mock": "^0.27.0",
     "reflect-metadata": "^0.1.12",
     "sqlite3": "^4.0.0",
     "typeorm": "^0.2.7"

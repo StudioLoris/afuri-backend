@@ -7,7 +7,9 @@ import * as koa from 'koa';
 import appService from '../service/app';
 import initApp from './init';
 
-const start = (isTest : boolean) : http.Server => {
+const start = async (isTest : boolean) : Promise<http.Server> => {
+
+    appService.isTest = isTest;
 
     /* istanbul ignore next line */
     if (appService.isDev) {
@@ -15,12 +17,9 @@ const start = (isTest : boolean) : http.Server => {
     }
 
     const app = new koa();
-    initApp(app);
+    await initApp(app);
 
-    /* istanbul ignore next line */
-    return app.listen(isTest ? 0 : 3001).on('error', (err) => {
-        throw err;
-    });
+    return app.listen(isTest ? 0 : 3001).on('error', (err) => { throw err; });
 };
 
 export default start;

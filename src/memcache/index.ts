@@ -1,4 +1,5 @@
 import * as redis from 'redis';
+import * as redisMock from 'redis-mock';
 
 import appService from '../service/app';
 
@@ -23,10 +24,15 @@ class MemcacheHandler {
   }
 
   public init() : Promise<boolean> {
-    this.client = redis.createClient({
-      host: appService.MEMCACHE_URL,
-      port: appService.MEMCACHE_PORT,
-    });
+    if (appService.isTest) {
+      this.client = redisMock.createClient();
+    } else {
+      this.client = redis.createClient({
+        host: appService.MEMCACHE_URL,
+        port: appService.MEMCACHE_PORT,
+      });
+    }
+
     return new Promise((res, rej) => {
       this.client.on('connect', () => {
         res(true);
