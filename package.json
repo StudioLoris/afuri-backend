@@ -45,10 +45,10 @@
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "koa-session": "^5.8.1",
+    "pg": "^7.4.3",
     "redis": "^2.8.0",
     "redis-mock": "^0.27.0",
     "reflect-metadata": "^0.1.12",
-    "sqlite3": "^4.0.0",
     "typeorm": "^0.2.7"
   },
   "devDependencies": {
@@ -63,6 +63,7 @@
     "ts-jest": "^22.4.6",
     "ts-node": "^6.0.5",
     "tslint": "^5.10.0",
-    "typescript": "^2.8.3"
+    "typescript": "^2.8.3",
+    "sqlite3": "^4.0.0"
   }
 }

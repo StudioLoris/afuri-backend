@@ -3,5 +3,6 @@ node_js:
   - "9"
 npm install:
   - npm install
-script: 
+script:
   - npm run test
+  - npm run test:prod

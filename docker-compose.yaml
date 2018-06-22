@@ -1,0 +1,13 @@
+redis:
+  container_name: afuri-redis
+  image: redis
+  ports:
+    - "6379:6379"
+postgres:
+  container_name: afuri-postgres
+  image: postgres
+  ports:
+    - "5432:5432"
+  environment:
+    - POSTGRES_USER=afuri
+    - POSTGRES_PASSWORD=password
