@@ -13,13 +13,8 @@ class OauthService {
     switch(provider) {
       case OAUTH_PROVIDER.FACEBOOK:
         /* Check Facebook token here */
-        const tokenInfo = await externalAPI.getFbTokenDebugInfo(token);
-        if (tokenInfo.data.is_valid &&
-            tokenInfo.data.user_id === oauthId) {
-          return true;
-        } else {
-          return false;
-        }
+        const {is_valid, user_id} = await externalAPI.getFbTokenDebugInfo(token);
+        return is_valid && (user_id === oauthId);
       default:
         return false;
     }

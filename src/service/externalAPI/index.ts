@@ -2,15 +2,13 @@ import axios from 'axios';
 import appService from '../app';
 
 interface FacebokTokenInfo {
-    data : {
-        app_id : string,
-        type : string,
-        application : string,
-        expires_at : number,
-        is_valid : boolean,
-        scopes : Array<string>,
-        user_id : string,
-    };
+  // app_id : string;
+  // type : string;
+  // application : string;
+  // expires_at : number;
+  is_valid? : boolean;
+  // scopes : Array<string>;
+  user_id? : string;
 }
 
 const request = axios.create();
@@ -20,7 +18,7 @@ class ExternalApi {
   private FB_APP_TOKEN_REP : string;
 
   constructor() {
-    this.FB_APP_TOKEN_REP = appService.FB_APP_ID+'|'+appService.FB_APP_SECRET;
+    this.FB_APP_TOKEN_REP = `${appService.FB_APP_ID}|${appService.FB_APP_SECRET}`;
   }
 
   public async getFbTokenDebugInfo(userToken : string) : Promise<FacebokTokenInfo> {
@@ -31,9 +29,9 @@ class ExternalApi {
           access_token: this.FB_APP_TOKEN_REP
         }
       });
-      return res.data;
+      return res.data.data;
     } catch (err) {
-      console.log(err);
+      return {};
     }
   }
 }
