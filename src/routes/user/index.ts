@@ -21,7 +21,7 @@ userRoute.post('/check', async (ctx) => {
         ctx.status = http_status.OK;
         return;
     } else {
-        const { email, provider, token } = ctx.request.body as any;
+        const { email, provider, token, oauthId } = ctx.request.body as any;
         const isValidOauth = await OauthService.validate(provider, token);
         if (!isValidOauth) {
             ctx.throw(http_status.UNAUTHORIZED, '');
