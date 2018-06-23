@@ -4,6 +4,8 @@ class AppService {
     public isTest : boolean = false;
     public MEMCACHE_URL : string;
     public MEMCACHE_PORT : string;
+    public FB_APP_ID : string;
+    public FB_APP_SECRET : string;
 
     private RMDB_TYPE : string;
     private RMDB_URL : string;
@@ -25,6 +27,8 @@ class AppService {
             MEMCACHE_PORT,
             MEMCACHE_USERNAME,
             MEMCACHE_PASSWORD,
+            FB_APP_ID,
+            FB_APP_SECRET
         } = process.env;
 
         this.isDev = npm_config_DEV === 'DEV';
@@ -37,6 +41,9 @@ class AppService {
         this.RMDB_DATABASE = RMDB_DATABASE || 'afuri';
         this.RMDB_USERNAME = RMDB_USERNAME || 'afuri';
         this.RMDB_PASSWORD = RMDB_PASSWORD || 'password';
+
+        this.FB_APP_ID = FB_APP_ID || '1934419210183456';
+        this.FB_APP_SECRET = FB_APP_SECRET || '82279378bdd605af7be2f0a0745c293f';
     }
 
     public getDBconfig() : any {
