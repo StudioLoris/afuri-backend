@@ -11,3 +11,4 @@ postgres:
   environment:
     - POSTGRES_USER=afuri
     - POSTGRES_PASSWORD=password
+    - POSTGRES_DB=afuri

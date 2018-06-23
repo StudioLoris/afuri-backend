@@ -16,33 +16,32 @@ userRoute.get('/', async (ctx) => {
 });
 
 userRoute.post('/check', async (ctx) => {
-    console.log(ctx.session);
-    let { count } = ctx.session;
-    ctx.session.count = (typeof count === 'number') ? ++count : 0;
-    console.log(ctx.request.body);
-    /**
-     * TODO: Check user session. If session is invalid, we'll run the following checks
-     */
-    const invalidSession = true;
-    if (invalidSession) {
+    const session = ctx.session;
+    if (session && session.userId) {
+        ctx.status = http_status.OK;
+        return;
+    } else {
         const { email, provider, token } = ctx.request.body as any;
         const isValidOauth = await OauthService.validate(provider, token);
         if (!isValidOauth) {
             ctx.throw(http_status.UNAUTHORIZED, '');
             return;
         }
-        const user = await findUser({ email });
+        let user = await findUser({ email });
         if (!user) {
             await createUser({ email });
+            user = await findUser({ email });
             ctx.status = http_status.CREATED;
         } else {
             ctx.status = http_status.OK;
         }
-        ctx.body = {};
-    } else {
-        ctx.status = http_status.OK;
-        ctx.body = {};
+        session.userId = user.id;
     }
+});
+
+userRoute.post('/logout', async (ctx) => {
+    ctx.session = null;
+    ctx.status = http_status.OK;
 });
 
 export default userRoute;

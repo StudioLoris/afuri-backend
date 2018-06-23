@@ -51,7 +51,7 @@ class AppService {
             host: this.RMDB_URL,
             port: this.RMDB_PORT,
             username: this.RMDB_USERNAME,
-            password: this.RMDB_USERNAME,
+            password: this.RMDB_PASSWORD,
             database: this.RMDB_DATABASE,
         };
     }
