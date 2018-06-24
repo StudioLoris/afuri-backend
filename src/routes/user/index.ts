@@ -5,7 +5,6 @@ import {
     findUser,
     createUser
 } from '../../db/utils/users';
-import { findWallet } from '../../db/utils/wallets';
 
 const userRoute = new Router();
 
