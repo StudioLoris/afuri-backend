@@ -9,7 +9,7 @@ class OauthService {
   constructor() {
   }
 
-  public async validate(provider : string, token : string, oauthId : string) {
+  public async validate(provider : string, token : string, oauthId : string) : Promise<boolean> {
     switch(provider) {
       case OAUTH_PROVIDER.FACEBOOK:
         /* Check Facebook token here */
