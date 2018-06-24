@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { Wallet } from '../wallet';
 
 @Entity()
 export class User {
@@ -8,5 +9,8 @@ export class User {
 
     @Column()
     public email : string;
+
+    @OneToOne(() => Wallet, (wallet) => wallet.user)
+    public wallet : Wallet;
 
 }
