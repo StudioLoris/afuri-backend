@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "jest --coverage --detectOpenHandles --runInBand --forceExit",
-    "test:prod": "npm run build && jest --runInBand --forceExit",
+    "test:prod": "npm run build && jest ./build --runInBand --forceExit --detectOpenHandles",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
