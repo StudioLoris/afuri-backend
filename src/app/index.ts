@@ -26,12 +26,10 @@ const start = async (isTest : boolean) : Promise<AfuriServer> => {
     const server : any = app.listen(isTest ? 0 : 3001).on('error', (err) => { throw err; });
 
     server.terminate = async () => {
-        console.log('terminating...');
         if (appService.isTest) {
             const mongoUnit = await import('mongo-unit');
             await mongoUnit.stop();
         }
-        console.log('terminating done...');
     };
 
     return server;
