@@ -20,8 +20,8 @@
   },
   "scripts": {
     "pre": "ts-node ./preinstall/mongoUnit.ts",
-    "test": "jest --coverage --detectOpenHandles --runInBand",
-    "test:prod": "npm run build && jest --runInBand",
+    "test": "jest --coverage --detectOpenHandles",
+    "test:prod": "npm run build && jest",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",
     "dev": "nodemon --watch src -e ts --exec 'npm run -s dev_start --DEV=DEV || exit 1'",
