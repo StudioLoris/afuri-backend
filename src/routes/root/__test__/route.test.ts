@@ -12,7 +12,7 @@ describe('"/" Testing', () => {
     });
 
     afterAll(async () => {
-        server.close();
+        server.terminate();
     });
 
     it('GET should return 200', async () => {

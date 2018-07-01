@@ -12,7 +12,7 @@ describe('"/mongo" Testing', () => {
     });
 
     afterAll(async () => {
-        server.close();
+        server.terminate();
     });
 
     test('GET should return 200', async () => {

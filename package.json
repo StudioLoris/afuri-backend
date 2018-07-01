@@ -20,7 +20,7 @@
   },
   "scripts": {
     "pre": "ts-node ./preinstall/mongoUnit.ts",
-    "test": "jest --coverage --detectOpenHandles",
+    "test": "jest --coverage --detectOpenHandles --runInBand --forceExit ",
     "test:prod": "npm run build && jest",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
     "tsc": "tsc -p ./tsconfig.json",

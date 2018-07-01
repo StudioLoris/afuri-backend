@@ -7,7 +7,11 @@ import * as koa from 'koa';
 import appService from '../service/app';
 import initApp from './init';
 
-const start = async (isTest : boolean) : Promise<http.Server> => {
+interface AfuriServer extends http.Server {
+    terminate : () => void;
+}
+
+const start = async (isTest : boolean) : Promise<AfuriServer> => {
 
     appService.isTest = isTest;
 
@@ -18,6 +22,15 @@ const start = async (isTest : boolean) : Promise<http.Server> => {
 
     const app = new koa();
     await initApp(app);
+
+    app.terminate = async () => {
+        console.log('terminating...');
+        if (appService.isTest) {
+            const mongoUnit = await import('mongo-unit');
+            await mongoUnit.stop();
+        }
+        console.log('terminating done...');
+    };
 
     return app.listen(isTest ? 0 : 3001).on('error', (err) => { throw err; });
 };
