@@ -1,6 +1,8 @@
 import start from '../../../app';
 import * as request from 'supertest';
 
+jest.setTimeout(100000);
+
 describe('"/user" Testing', () => {
 
     let server;
