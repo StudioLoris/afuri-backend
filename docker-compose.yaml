@@ -12,3 +12,11 @@ postgres:
     - POSTGRES_USER=afuri
     - POSTGRES_PASSWORD=password
     - POSTGRES_DB=afuri
+mongo:
+  container_name: aufuri-mongo
+  image: mongo
+  ports:
+    - "27017:27017"
+  environment:
+    - ME_CONFIG_MONGODB_ADMINUSERNAME=afuri
+    - ME_CONFIG_MONGODB_ADMINPASSWORD=password

@@ -3,12 +3,14 @@ import * as session from 'koa-session';
 import * as bodyParser from 'koa-bodyparser';
 import routes from '../../routes';
 
-import { initDB, initEntityHandler } from '../../db';
+import { initDB, initMongo, initEntityHandler, initMongoEntityHandler } from '../../db';
 import memcacheHandler from '../../memcache';
 
 const initApp = async (app : koa) => {
     const connection = await initDB();
+    const mongo = await initMongo();
     await initEntityHandler(connection);
+    await initMongoEntityHandler(mongo);
     await memcacheHandler.init();
 
     app.keys = ['asdasdasdasdasd'];
