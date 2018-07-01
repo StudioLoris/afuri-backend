@@ -19,6 +19,7 @@
     ]
   },
   "scripts": {
+    "pre": "ts-node ./preinstall/mongoUnit.ts",
     "test": "jest --coverage --detectOpenHandles",
     "test:prod": "npm run build && jest",
     "lint": "tslint -c ./tslint.json 'src/**/*'",
