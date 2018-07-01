@@ -50,7 +50,10 @@ export const initMongo = async () : Promise<Connection> => {
         try {
             await mongoUnit.start({port: PORT});
         } catch(err) {
-            if (err !== 'already running') {
+            if (err === 'Mongod shutting down') {
+                await mongoUnit.stop();
+                await mongoUnit.start({port: PORT});
+            } else if (err !== 'already running') {
                 throw err;
             }
         }
