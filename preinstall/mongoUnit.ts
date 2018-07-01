@@ -1,9 +1,10 @@
 (async () => {
     const mongoUnit = await import('mongo-unit');
     try {
-        await mongoUnit.start();
+        await mongoUnit.start({port: 27019});
     } catch(err) {
         console.log(err);
     }
-    mongoUnit.stop();
+    // mongoUnit.stop();
+    process.exit();
 })();
