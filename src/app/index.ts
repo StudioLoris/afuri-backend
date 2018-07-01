@@ -23,7 +23,9 @@ const start = async (isTest : boolean) : Promise<AfuriServer> => {
     const app = new koa();
     await initApp(app);
 
-    app.terminate = async () => {
+    const server : any = app.listen(isTest ? 0 : 3001).on('error', (err) => { throw err; });
+
+    server.terminate = async () => {
         console.log('terminating...');
         if (appService.isTest) {
             const mongoUnit = await import('mongo-unit');
@@ -32,7 +34,7 @@ const start = async (isTest : boolean) : Promise<AfuriServer> => {
         console.log('terminating done...');
     };
 
-    return app.listen(isTest ? 0 : 3001).on('error', (err) => { throw err; });
+    return server;
 };
 
 export default start;
