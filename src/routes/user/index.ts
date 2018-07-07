@@ -22,6 +22,7 @@ userRoute.post('/login', async (ctx) => {
         ctx.body = {
             oauthProvider: session.oauthProvider,
             accessToken: session.accessToken,
+            oauthId: session.oauthId,
         };
         ctx.status = http_status.OK;
     } else if (provider && code) {
@@ -36,10 +37,11 @@ userRoute.post('/login', async (ctx) => {
         ctx.body = {
             oauthProvider: provider,
             accessToken,
+            oauthId: userProfile.id,
         };
         session.oauthProvider = provider;
         session.accessToken = accessToken;
-        session.userId = user.id;
+        session.oauthId = userProfile.id;
     } else {
         ctx.throw(http_status.UNAUTHORIZED, '');
     }

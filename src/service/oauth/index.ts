@@ -31,13 +31,18 @@ class OauthService {
   public async getAccessToken(provider : string, code : string) : Promise<string> {
     switch(provider) {
       case OAUTH_PROVIDER.LINE:
-        const data = await externalAPI.getLineAccessToken(code);
+        return externalAPI.getLineAccessToken(code);
+      case OAUTH_PROVIDER.FACEBOOK:
+        const data = await externalAPI.getFacebookAccessToken(code);
         return data;
     }
   }
 
   public async getUserProfile(provider : string, accessToken : string) : Promise<UserProfile> {
     switch(provider) {
+      case OAUTH_PROVIDER.FACEBOOK:
+        const { id, name, email } = await externalAPI.getFacebookProfile(accessToken);
+        return { id, name, email, picture: '' };
       case OAUTH_PROVIDER.LINE:
         const { displayName, pictureUrl, userId } = await externalAPI.getLineProfile(accessToken);
         return {

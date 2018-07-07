@@ -2,6 +2,9 @@ import axios from 'axios';
 import * as querystring from 'querystring';
 import appService from '../app';
 
+/* tslint:disable */
+const getFacebookAccessTokenURL = (code : string) => `https://graph.facebook.com/v3.0/oauth/access_token?client_id=1934419210183456&redirect_uri=http://localhost:8080/verifyOauth/facebook&client_secret=82279378bdd605af7be2f0a0745c293f&code=${code}`;
+
 interface FacebokTokenInfo {
   // app_id : string;
   // type : string;
@@ -53,12 +56,26 @@ class ExternalApi {
       // console.log(data, headers);
       return data.access_token;
     } catch(err) {
-      console.log('Erro when requiring LINE OAUTH ACCESS TOKEN');
+      console.log('Error when requiring LINE OAUTH ACCESS TOKEN');
     }
   }
 
   public async getLineProfile(accesToken : string) : Promise<{ displayName : string, pictureUrl : string, userId : string }> {
     const { data } = await axios.get('https://api.line.me/v2/profile', { headers: { 'Authorization': `Bearer ${accesToken}` } });
+    return data;
+  }
+
+  public async getFacebookAccessToken(code : string) {
+    try {
+      const { data } = await axios.get(getFacebookAccessTokenURL(code));
+      return data.access_token;
+    } catch(err) {
+      console.log('error getting FB access token', err.response.data);
+    }
+  }
+
+  public async getFacebookProfile(accessToken : string) {
+    const { data } = await axios.get(`https://graph.facebook.com/me?fields=id,name,email&access_token=${accessToken}`);
     return data;
   }
 }
