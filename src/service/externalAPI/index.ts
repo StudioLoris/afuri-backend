@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as querystring from 'querystring';
 import appService from '../app';
 
 interface FacebokTokenInfo {
@@ -33,6 +34,32 @@ class ExternalApi {
     } catch (err) {
       return {};
     }
+  }
+
+  public async getLineAccessToken(code : string) {
+    try {
+      const { data, headers } = await axios.post(
+        'https://api.line.me/oauth2/v2.1/token',
+        querystring.stringify({
+          grant_type: 'authorization_code',
+          code,
+          client_id: '1590579283',
+          client_secret: '306036f74ef670e524592cc8e01ba44d',
+          redirect_uri: 'http://localhost:8080/verifyOauth/line'
+        }), {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }
+      );
+      // console.log(data, headers);
+      return data.access_token;
+    } catch(err) {
+      console.log('Erro when requiring LINE OAUTH ACCESS TOKEN');
+    }
+  }
+
+  public async getLineProfile(accesToken : string) : Promise<{ displayName : string, pictureUrl : string, userId : string }> {
+    const { data } = await axios.get('https://api.line.me/v2/profile', { headers: { 'Authorization': `Bearer ${accesToken}` } });
+    return data;
   }
 }
 

@@ -17,7 +17,7 @@ export const initDB = async () : Promise<Connection> => {
     const CONFIG = appService.getDBconfig();
 
     return createConnection({
-        name: 'rmdb',
+        // name: 'rmdb',
         ...CONFIG,
         entities: [
             User,

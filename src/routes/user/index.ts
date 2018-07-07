@@ -15,31 +15,38 @@ userRoute.get('/', async (ctx) => {
     };
 });
 
-userRoute.post('/check', async (ctx) => {
+userRoute.post('/login', async (ctx) => {
     const session = ctx.session;
-    if (session && session.userId) {
+    const { provider, code } = ctx.request.body;
+    if (session && session.accessToken) {
+        ctx.body = {
+            oauthProvider: session.oauthProvider,
+            accessToken: session.accessToken,
+        };
         ctx.status = http_status.OK;
-        return;
-    } else {
-        const { email, provider, token, oauthId } = ctx.request.body as any;
-        const isValidOauth = await OauthService.validate(provider, token, oauthId);
-        if (!isValidOauth) {
-            ctx.throw(http_status.UNAUTHORIZED, '');
-            return;
-        }
-        let user = await findUser({ email });
+    } else if (provider && code) {
+        const accessToken = await OauthService.getAccessToken(provider, code);
+        const userProfile = await OauthService.getUserProfile(provider, accessToken);
+        const user = await findUser({ email: userProfile.email });
+        ctx.status = http_status.OK;
         if (!user) {
-            await createUser({ email });
-            user = await findUser({ email });
+            await createUser({ email: userProfile.email });
             ctx.status = http_status.CREATED;
-        } else {
-            ctx.status = http_status.OK;
         }
+        ctx.body = {
+            oauthProvider: provider,
+            accessToken,
+        };
+        session.oauthProvider = provider;
+        session.accessToken = accessToken;
         session.userId = user.id;
+    } else {
+        ctx.throw(http_status.UNAUTHORIZED, '');
     }
 });
 
 userRoute.post('/logout', async (ctx) => {
+    console.log('loggin out');
     ctx.session = null;
     ctx.status = http_status.OK;
 });
